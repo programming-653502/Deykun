@@ -1,0 +1,33 @@
+#include <conio.h>
+#include <iostream>
+
+using namespace std;
+
+int main () {
+	setlocale ( LC_ALL, "rus");
+
+	char value[20];
+	cout << "Введите дробное число : " << endl;
+	cin >> value;
+	for ( int i = 0; value[i] != '\0'; i++){
+		while (value[i] > '9'  || value[i] < '0' && value[i] != '.' && value[i] != ',' ) {
+			cout << "Ошибка ввода! Попробуйте снова : " << endl;
+			cin >> value;
+		}
+	}
+	
+	int i;
+	for ( i = 0; value[i] != '.' && value[i] != ',' && value[i] != '\0'; i++)
+		cout << value[i];
+	cout << " руб ";
+	
+
+	while ( value [ i + 1 ] != '\0' ){
+		cout << value[i + 1];
+		i++;
+	}
+	cout << " коп ";
+
+	getch();
+	return 0;
+}
