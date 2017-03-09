@@ -1,0 +1,108 @@
+#include <iostream>
+#include <conio.h>
+
+template<typename T>
+void tree(T array[], int size) 
+{
+	
+	struct tree_t
+	{
+		tree_t *left, *right;
+		T value;
+
+		tree_t(T &&_value = T())
+		{
+			left = right = nullptr;
+			value = std::forward<T>(_value);
+		}
+
+		T* operator()(T array[])
+		{
+			if (this->left)
+				array = this->left->operator()(array);
+
+			*array++ = std::move(this->value);
+
+			if (this->right)
+				array = this->right->operator()(array);
+
+			return array;
+		}
+	} root(move(array[0]));
+
+	
+	for (int i = 1; i < size; i ++)
+	{
+		bool inserted = false;
+		tree_t *p_root = &root;
+		while (!inserted)
+		{
+			if (array[i] < p_root->value)
+			{
+				if (p_root->left) p_root = p_root->left;
+				else
+				{
+					p_root->left = new tree_t(move(array[i]));
+					inserted = true;
+				}
+			}
+			else
+			{
+				if (p_root->right) p_root = p_root->right;
+				else
+				{
+					p_root->right = new tree_t(move(array[i]));
+					inserted = true;
+				}
+			}
+		}
+	}
+
+	root(array);
+}
+
+using namespace std;
+
+int main ()
+{
+	setlocale (LC_ALL, "rus");
+	int n = 0, j = 0;
+	char str[80], val[10];	
+	int arr[10];
+	cout << "Введите строку , содержащую числа : " << endl;
+	gets(str);
+
+
+	for ( int i = 0; str[i] != '\0'; i++) {
+
+		if (str[i] >= '0' && str[i] <= '9') {
+			val[j] = str[i]; j++;
+
+			if (str[i + 1] < '0' || str [i + 1] > '9'){
+				arr[n] = move(atoi(val));
+				n++; 
+				for ( int k(0); k < j; k++)
+					val[k] = '\0';
+				j = 0;
+				}					
+
+		}
+		
+	}
+
+	cout << endl << "Массив, полученный из строки : " << endl;
+	for ( int i = 0; i < n; i++) 
+		cout << arr[i] << '\t' ;
+		
+	tree<int> (arr, n);		
+	
+	cout << endl << "Отсортированный массив : " << endl;
+
+	for ( int i(0); i < n; i++)
+	{
+		cout << arr[i] << "\t";	
+	} 
+	
+	getch();
+	return 0;
+}
