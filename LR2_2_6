@@ -1,0 +1,43 @@
+#include <iostream>
+#include <conio.h>
+#include <math.h>
+
+using namespace std;
+
+double Factorial(int N) 
+{ 
+	double F; 
+	if (N <= 1) F = 1.0 ; 
+	else F = Factorial (N - 1) * N ; 
+	return F;
+} 
+
+int main() {
+	setlocale (LC_ALL, "rus");
+	double x, e, val = 0;
+	cout << "Введите значение x и точность e : " ;
+
+	 while(!(cin >> x >> e))
+    {
+        cin.clear();
+        cin.ignore((numeric_limits<std::streamsize>::max)(),'\n');
+        cout << "Неверный ввод, попробуйте снова : ";
+    }
+
+	for ( int i = 1; i <= 1000; i++) {
+		val += pow( -1, i - 1) * pow (x, 2 * i - 1) / Factorial(2 * i - 1);
+		
+		if ( abs(val - sin(x) ) < e){
+			cout << "Точность достигается при n = " << i << endl;
+			break;
+		}
+	}
+		
+	cout << "sin(x) = " << sin(x) << endl;
+	cout << "sinus(x) = " << val << endl;
+	 
+	cout << "Погрешность при n =  " << abs(val - sin(x)) << endl;
+
+	getch();
+	return 0;
+}
