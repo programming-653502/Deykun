@@ -1,0 +1,138 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+double input();
+void menu ();
+int value (double);
+double standart (int val, double length);
+void perevod_rus (double length);
+void perevod_engl (double length);
+void vivod (double length);
+void inf();
+
+int main () {
+	setlocale (LC_ALL, "rus");
+	double length;
+		cout << "Введите значение длины : " << endl;
+		
+	length = input();
+	int a = 0;
+	while (a == 0) {
+		menu();
+		cout << endl;
+
+		int number;		
+		cout << "Введите номер желаемого действия : ";
+		cin >> number;
+		
+		switch(number) {
+			case 1: 
+				int val;
+				length = value(length); 
+				break;
+			case 2: 
+				perevod_rus(length);
+				break;
+			case 3: 
+				perevod_engl(length);
+				break;
+			case 4: 
+				vivod(length);
+				break;
+			case 5:  
+				cout << "Введите длину : ";
+				length = input();
+				break;
+			case 6: inf();
+				break;
+			default: a = 1;
+				break;
+		}
+		getch();
+		system("cls");
+	}
+
+
+	getch();
+	return 0;
+}
+void menu (){
+	cout << endl << "Меню " << endl ;
+	cout << "1) Ввод значения длины (по умолчанию мм) " << endl;
+	cout << "2) Перевод в русские традиционные единицы" << endl;
+	cout << "3) Перевод в английские традиционные единицы" << endl;
+	cout << "4) Вывод отчета" << endl;
+	cout << "5) Повторный ввод длины " << endl;
+	cout << "6) Информация об авторе " << endl;
+	cout << "7) Выход" << endl;
+}
+
+int value (double length) {
+	cout << "Введите значение длины : \n 1. км; \n 2. м; \n 3. см; \n 4. мм;" << endl;
+	int value;
+	cin >> value; 
+
+	switch(value){
+		case 1: length /= 1000000;
+			break;
+		case 2: length /= 1000;
+			break;
+		case 3: length /= 10;
+			break;
+		case 4: break;
+	}
+	return length;
+}
+
+void perevod_rus (double length){
+	length /= 44.55;
+	cout << "Вершков :\t" << length << endl;
+	length /= 16;
+	cout << "Аршин :\t\t" << length << endl;
+	length /= 3;
+	cout << "Сажней :\t" << length << endl;
+	length /= 500;
+	cout << "Вёрст :\t\t" << length << endl;
+}
+
+void perevod_engl (double length){
+	length /= 25,4;
+	cout << "Дюймов :\t" << length << endl;
+	length /= 12;
+	cout << "Футов :\t\t" << length << endl;
+	length /= 3;
+	cout << "Ярд :\t\t" << length << endl;
+	length /= 1760;
+	cout << "Миль :\t\t" << length << endl;
+}
+
+void vivod (double length){
+	cout << "Миллиметров :\t" << length << endl;
+	length /= 10;
+	cout << "Сантиметров :\t" << length << endl;
+	length /= 1000;
+	cout << "Метров :\t" << length << endl;
+	length /= 1000000;
+	cout << "Километров :\t" << length << endl;
+}
+
+void inf() {
+	cout << endl << "Лаборотоная работа №1" << endl;
+	cout << "Дейкун Елены" << endl;
+	cout << "Группа : 653502" << endl;
+	cout << "Вариант: 2.1.9" << endl;
+}
+
+double input()
+{
+    double length ;
+    while(!(cin >> length))
+    {
+        cin.clear();
+        cin.ignore((numeric_limits<std::streamsize>::max)(),'\n');
+        cout << "Ошибка ввода! Попробуйте снова :  ";
+    }
+    return length;
+}
