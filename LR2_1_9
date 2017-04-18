@@ -3,61 +3,59 @@
 
 using namespace std;
 
-double input();
+double inputLength();
 void menu ();
 int value (double);
 double standart (int val, double length);
-void perevod_rus (double length);
-void perevod_engl (double length);
-void vivod (double length);
-void inf();
+void convertRus (double length);
+void convertEngl (double length);
+void output (double length);
+void aboutAuthor();
 
 int main () {
 	setlocale (LC_ALL, "rus");
-	double length;
-		cout << "Введите значение длины : " << endl;
+	cout << "Введите значение длины : " << endl;
 		
-	length = input();
-	int a = 0;
-	while (a == 0) {
+	double length = inputLength();
+
+	while (true) {
 		menu();
 		cout << endl;
-
-		int number;		
+				
 		cout << "Введите номер желаемого действия : ";
-		cin >> number;
+		char ch = _getch();
 		
-		switch(number) {
-			case 1: 
-				int val;
+		switch(ch) {
+			case '1': 
+				double val;
 				length = value(length); 
 				break;
-			case 2: 
-				perevod_rus(length);
+			case '2': 
+				convertRus(length);
 				break;
-			case 3: 
-				perevod_engl(length);
+			case '3': 
+				convertEngl(length);
 				break;
-			case 4: 
-				vivod(length);
+			case '4': 
+				output(length);
 				break;
-			case 5:  
-				cout << "Введите длину : ";
-				length = input();
+			case '5':  
+				cout << "\nВведите длину : ";
+				length = inputLength();
 				break;
-			case 6: inf();
+			case '6': aboutAuthor();
 				break;
-			default: a = 1;
-				break;
+			default: 
+				return false;
 		}
-		getch();
+		_getch();
 		system("cls");
 	}
 
-
-	getch();
+	_getch();
 	return 0;
 }
+
 void menu (){
 	cout << endl << "Меню " << endl ;
 	cout << "1) Ввод значения длины (по умолчанию мм) " << endl;
@@ -70,8 +68,8 @@ void menu (){
 }
 
 int value (double length) {
-	cout << "Введите значение длины : \n 1. км; \n 2. м; \n 3. см; \n 4. мм;" << endl;
-	int value;
+	cout << "\nВведите значение длины : \n 1. км; \n 2. м; \n 3. см; \n 4. мм;" << endl;
+    int value;
 	cin >> value; 
 
 	switch(value){
@@ -86,9 +84,11 @@ int value (double length) {
 	return length;
 }
 
-void perevod_rus (double length){
+
+
+void convertRus (double length){
 	length /= 44.55;
-	cout << "Вершков :\t" << length << endl;
+	cout << "\nВершков :\t" << length << endl;
 	length /= 16;
 	cout << "Аршин :\t\t" << length << endl;
 	length /= 3;
@@ -97,9 +97,9 @@ void perevod_rus (double length){
 	cout << "Вёрст :\t\t" << length << endl;
 }
 
-void perevod_engl (double length){
+void convertEngl (double length){
 	length /= 25,4;
-	cout << "Дюймов :\t" << length << endl;
+	cout << "\nДюймов :\t" << length << endl;
 	length /= 12;
 	cout << "Футов :\t\t" << length << endl;
 	length /= 3;
@@ -108,8 +108,8 @@ void perevod_engl (double length){
 	cout << "Миль :\t\t" << length << endl;
 }
 
-void vivod (double length){
-	cout << "Миллиметров :\t" << length << endl;
+void output (double length){
+	cout << "\nМиллиметров :\t" << length << endl;
 	length /= 10;
 	cout << "Сантиметров :\t" << length << endl;
 	length /= 1000;
@@ -118,14 +118,14 @@ void vivod (double length){
 	cout << "Километров :\t" << length << endl;
 }
 
-void inf() {
-	cout << endl << "Лаборотоная работа №1" << endl;
+void aboutAuthor() {
+	cout << endl << "\nЛаборотоная работа №1" << endl;
 	cout << "Дейкун Елены" << endl;
 	cout << "Группа : 653502" << endl;
 	cout << "Вариант: 2.1.9" << endl;
 }
 
-double input()
+double inputLength()
 {
     double length ;
     while(!(cin >> length))
