@@ -1,0 +1,26 @@
+#include "List.h"
+
+int main() {
+	List elevate;
+	elevate.Add(3);
+	int exp = 3;
+
+	for (int i(1); i < exp; i++) {
+		Node *temp = elevate.getHead();
+		while (temp != NULL) {
+			temp->x *= 3;
+			int val = temp->x;
+
+			if (temp->x >= 10) {
+				temp->x = val % 10;
+				val /= 10;
+				elevate.Add(val);
+			}
+		}
+	}
+
+	elevate.Show();
+	getch();
+	elevate.~List();
+	return 0;
+}
