@@ -1,0 +1,109 @@
+//возведение 3^n, при n > 100
+
+#include <conio.h>
+#include <iostream>
+#include <string>
+
+using namespace std;
+int inputExp();
+
+struct Node       
+{
+	int value;     
+	Node *Next, *Prev; 
+};
+
+class List   
+{
+	Node *Head, *Tail; 
+public:
+	List() :Head(NULL), Tail(NULL) {}; 
+	~List();
+	void Show(); 
+	void Add(int); 
+	Node* getHead();
+};
+
+int main() {
+	List elevate;
+	elevate.Add(3);
+	int exp = 3;
+
+	for (int i(1); i < exp; i++) {
+		Node *temp = elevate.getHead();
+		while (temp != NULL) {
+			temp->value *= 3;
+			int val = temp->value;
+
+			if (temp->value >= 10) {
+				temp->value = val % 10;
+				val /= 10;
+				elevate.Add(val);
+			}
+		}
+	}
+
+	elevate.Show();
+	getch();
+	elevate.~List();
+	return 0;
+}
+
+
+
+List::~List() 
+{
+	while (Head) 
+	{
+		Tail = Head->Next; 
+		delete Head; 
+		Head = Tail; 
+	}
+}
+
+void List::Add(int value)
+{
+	Node *temp = new Node;
+	temp->Next = NULL;  
+	temp->value = value;
+
+	if (Head != NULL)
+	{
+		temp->Prev = Tail; 
+		Tail->Next = temp; 
+		Tail = temp; 
+	}
+	else 
+	{
+		temp->Prev = NULL;
+		Head = Tail = temp; 
+	}
+}
+
+void List::Show()
+{
+	//вывод элементов с конца, т к новый разряд записываем в конец списка
+	Node *temp = Tail;
+
+	while (temp != NULL) 
+	{
+		cout << temp->value; 
+		temp = temp->Prev; 
+	}
+}
+
+Node* List::getHead() {
+	return Head;
+};
+
+int inputExp()
+{
+    int exp ;
+    while(!(cin >> length))
+    {
+        cin.clear();
+        cin.ignore((numeric_limits<std::streamsize>::max)(),'\n');
+        cout << "Ошибка ввода! Попробуйте снова :  ";
+    }
+    return exp;
+}
