@@ -1,0 +1,162 @@
+#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <conio.h>
+
+using namespace std;
+
+int findError(char symbol, char *text);
+
+int main() {
+	setlocale(LC_ALL, "rus");
+	FILE *file;
+	char *text = (char*)malloc(sizeof(char) * 200);	
+
+	file = fopen("D:\\text.txt", "r");
+	if (file == NULL) {
+		cout << "Файл не найден!\n";
+		getch();
+		return 0;
+	}
+
+	int flag = 0;
+	while (!feof(file)) {
+		fgets(text, 200, file);
+		cout << text;		
+		if (findError(')', text)) {
+			printf("\nНеправильно расставлены () ");
+			flag = 0;
+		}
+		else
+			flag = 1;
+      
+		if (findError('}', text)) {
+			printf("\nНеправильно расставлены {} ");
+			flag = 0;
+		}
+		else
+			flag = 1;
+      
+		if (findError(']', text)) {
+			printf("\nНеправильно расставлены [] ");
+			flag = 0;
+		}
+		else
+			flag = 1;
+      
+		if (flag == 1) {
+			printf("\nВсе скобки расставлены правильно\n");
+		}
+	}
+	
+	fclose(file);
+
+	getch();
+	return 0;
+}
+
+int length(char *text)
+{
+	int length = 0;
+	while (*text != '\0')
+	{
+		text++;
+		length++;
+	}
+	return length;
+}
+
+int findErrorRight(char symbol, char *text)
+{
+	int len = length(text), count = 0, flag, k = -1;
+	char ch;
+	switch (symbol) {
+		case ')':
+			ch = '(';
+			break;
+		case '}':
+			ch = '{';
+			break;
+		case ']':
+			ch = '[';
+			break;
+	}
+
+	for (int i = 0; i < len; i++) {
+		if (text[i] == symbol) {
+			int j = i - 1;
+			while (j >= 0) {
+				if (j == k) {
+					flag = 0;
+					break;
+				}
+				else if (text[j] == ch) {
+					k = j;
+					flag = 1;
+					break;
+				}
+				flag = 0;
+				j--;
+			}
+			if (flag == 0) {
+				count++;
+			}
+		}
+	}
+	return count;
+}
+
+int findErrorLeft(char symbol, char *text)
+{
+	int len = length(text), count = 0, flag, k = -1;
+	char ch;
+	switch (symbol) {
+	case '(':
+		ch = ')';
+		break;
+	case '{':
+		ch = '}';
+		break;
+	case '[':
+		ch = ']';
+		break;
+	}
+	for (int i = 0; i < len; i++) {
+		if (text[i] == symbol) {
+			int j = i + 1;
+			while (j < len) {
+				if (j == k) {
+					flag = 0;
+					break;
+				}
+				else if (text[j] == ch) {
+					k = j;
+					flag = 1;
+					break;
+				}
+				flag = 0;
+				j++;
+			}
+			if (flag == 0) {
+				count++;
+			}
+		}
+	}
+	return count;
+}
+
+int findError(char symbol, char *text) {
+	char ch;
+	switch (symbol) {
+	case ')':
+		ch = '(';
+		break;
+	case '}':
+		ch = '{';
+		break;
+	case ']':
+		ch = '[';
+		break;
+	}
+	return findErrorLeft(ch, text) + findErrorRight(symbol, text);
+}
