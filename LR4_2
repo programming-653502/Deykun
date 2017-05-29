@@ -1,10 +1,8 @@
-#include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <conio.h>
 
 using namespace std;
-
 int findError(char symbol, char *text);
 
 int main() {
